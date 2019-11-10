@@ -338,6 +338,35 @@ public class Java8StreamsDemo {
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
+    public void java8StreamsParallelVsSequentialStreams() {
+
+        //  Before Java 8
+        List<Integer> myList = new ArrayList<>();
+        for(int i=0; i<100; i++) myList.add(i);
+
+        //  Java 8 Stream API
+        List<Integer> myJava8List = IntStream
+                .rangeClosed(1, 100)
+                .boxed()
+                .collect(Collectors.toList());
+
+        //  Sequential Stream
+        Stream<Integer> sequentialStream = myList.stream();
+
+        //  Parallel Stream
+        Stream<Integer> parallelStream = myList.parallelStream();
+
+        //  Parallel: using lambda with Stream API, filter example
+        Stream<Integer> highNums = parallelStream.filter(p -> p > 90);
+
+        //  using lambda in forEach
+        highNums.forEach(p -> System.out.println("High Nums parallel="+p));
+
+        //  Sequential: using lambda with Stream API, filter example
+        Stream<Integer> highNumsSeq = sequentialStream.filter(p -> p > 90);
+        highNumsSeq.forEach(p -> System.out.println("High Nums sequential="+p));
+    }
+
     /*
      * Exercise:
      * You are given a List of integers and number of steps, to rotate the list.
@@ -436,6 +465,7 @@ public class Java8StreamsDemo {
 
         demo.java8StreamsCollectors();
         demo.java8StreamsParallelStreams();
+        demo.java8StreamsParallelVsSequentialStreams();
 
         demo.rotateListOfIntegers();
 
