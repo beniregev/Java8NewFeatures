@@ -1,4 +1,4 @@
-package com.beniregev.lambdasbasic;
+package com.beniregev.c_lambdasbasic;
 
 /**
  * Before Java8 when we wanted to write a simple program to print "Hello World"

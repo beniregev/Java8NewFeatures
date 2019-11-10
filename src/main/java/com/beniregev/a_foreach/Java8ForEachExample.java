@@ -1,4 +1,4 @@
-package com.beniregev.foreach;
+package com.beniregev.a_foreach;
 
 import java.util.ArrayList;
 import java.util.Iterator;

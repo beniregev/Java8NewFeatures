@@ -1,4 +1,4 @@
-package com.beniregev.defaultmethod;
+package com.beniregev.b_defaultmethod;
 
 @FunctionalInterface
 public interface Interface2 {

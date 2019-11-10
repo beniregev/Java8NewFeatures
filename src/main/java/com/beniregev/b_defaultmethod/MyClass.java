@@ -1,4 +1,4 @@
-package com.beniregev.defaultmethod;
+package com.beniregev.b_defaultmethod;
 
 /**
  * <p>
@@ -41,8 +41,8 @@ package com.beniregev.defaultmethod;
  * For complete details of interface changes in Java 8, please read <i>Java 8 interface changes</i>.
  * </p>
  * @author Binyamin Regev email: beniregev@gmail.com
- * @see com.beniregev.defaultmethod.Interface1
- * @see com.beniregev.defaultmethod.Interface2
+ * @see com.beniregev.b_defaultmethod.Interface1
+ * @see com.beniregev.b_defaultmethod.Interface2
  */
 public class MyClass implements Interface1, Interface2 {
     @Override

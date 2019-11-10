@@ -1,6 +1,6 @@
-package com.beniregev.streamsapi;
+package com.beniregev.d_streamsapi;
 
-import com.beniregev.streamsapi.model.Employee;
+import com.beniregev.d_streamsapi.model.Employee;
 
 import java.util.*;
 import java.util.stream.Collectors;

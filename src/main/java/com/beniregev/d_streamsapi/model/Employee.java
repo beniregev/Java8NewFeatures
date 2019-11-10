@@ -1,4 +1,4 @@
-package com.beniregev.streamsapi.model;
+package com.beniregev.d_streamsapi.model;
 
 import lombok.*;
 

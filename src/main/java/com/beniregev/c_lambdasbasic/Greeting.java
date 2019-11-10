@@ -1,4 +1,4 @@
-package com.beniregev.lambdasbasic;
+package com.beniregev.c_lambdasbasic;
 
 public interface Greeting {
     public void perform();
