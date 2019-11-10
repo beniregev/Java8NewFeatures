@@ -276,6 +276,68 @@ public class Java8StreamsDemo {
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
+    public void java8StreamsCollectors() {
+        System.out.println("java8StreamsCollectors(): ");
+        List<Employee> listOfEmployees = getAllEmployees();
+
+        //  Collect into a string with comma separator, e.g. "value, value, value, ..."
+        String names = listOfEmployees.stream()
+                .limit(3)
+                .map(Employee::getFullName)
+                .collect(Collectors.joining(", "));
+
+        //  Collect into a Map<String, List<Employee>>, group by dept
+        Map<String, List<Employee>> empByDept = listOfEmployees
+                .stream()
+                .collect(Collectors.groupingBy(e -> e.getDept()));
+
+        //  Collect into a Map<String, Long>, counting employees in each dept
+        Map<String, Long> deptCounts = listOfEmployees
+                .stream()
+                .collect(Collectors.groupingBy(Employee::getDept, Collectors.counting()));
+
+        System.out.println("\t Map<String, List<Employee>> empByDept:");
+        empByDept.forEach((k,v) -> System.out.println("\t\t " + "key: " + k + ", value: " + v));
+        System.out.println("\t ---------------------------------------------------------------------------------------------");
+        System.out.println("\t Map<String, Long> deptCounts:");
+        deptCounts.forEach((k,v) -> System.out.println("\t\t " + "key: " + k + ", value: " + v));
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+    /**
+     * Because of the time it takes and the memory it consumes, consider Using ParallelStreams only when you have
+     * more than 10000 (10K) elements, and even then: measure first!!!
+     */
+    public void java8StreamsParallelStreams() {
+        System.out.println("java8StreamsParallelStreams(): ");
+        long parStart = System.currentTimeMillis();
+        Map<String, List<Employee>> empByDept = getAllEmployees()
+                .stream()
+                .parallel()
+                .collect(Collectors.groupingBy(e -> e.getDept()));
+        long parEnd = System.currentTimeMillis();
+        System.out.println("\t Parallel Streams: Collect as Map<String, List<Employee>>, group by dept -- time taken: " + (parEnd - parStart) + "\n");
+
+        List<Employee> listOfEmployees = new ArrayList<>();
+        for (int i=0; i<1000; i++) {
+            listOfEmployees.addAll(getAllEmployees());
+        }
+        System.out.println("\t listOfEmployees.size() = " + listOfEmployees.size() + "\n");
+
+        //  Here We will use a 'Sequential Stream' & Displaying The Result
+        long seqStart = System.currentTimeMillis();
+        System.out.println("\t Sequential Steam Count = " + listOfEmployees.stream().filter(e -> e.getSalary() > 10000).count());
+        long seqEnd = System.currentTimeMillis();
+        System.out.println("\t Sequential Steam time taken = " + (seqEnd - seqStart));
+
+        //  Here We will use a 'Parallel Stream' & Displaying The Result
+        parStart = System.currentTimeMillis();
+        System.out.println("\t Parallel Steam Count = " + listOfEmployees.parallelStream().filter(e -> e.getSalary() > 10000).count());
+        parEnd = System.currentTimeMillis();
+        System.out.println("\t Parallel Steam time taken = " + (parEnd - parStart) + "\n");
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
     /*
      * Exercise:
      * You are given a List of integers and number of steps, to rotate the list.
@@ -296,7 +358,7 @@ public class Java8StreamsDemo {
         System.out.println("\n");
 
         System.out.print("\t Java8 Stream: ");
-        ListUsingJava8.forEach(num -> System.out.println("\t " + num + "  "));
+        ListUsingJava8.forEach(num -> System.out.print(num + "  "));
         System.out.println("\n");
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
@@ -348,10 +410,9 @@ public class Java8StreamsDemo {
         List<Integer> resultList = streamOfIntegers
                 .skip(numberOfSteps)
                 .collect(Collectors.toList());
-        resultList.addAll(streamOfIntegers
+        resultList.addAll(intList.stream()
                 .limit(numberOfSteps)
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
         return resultList;
     }
 
@@ -373,22 +434,30 @@ public class Java8StreamsDemo {
         demo.java8StreamsApiMethods();
         demo.java8StreamsAggregatedFunctions();
 
+        demo.java8StreamsCollectors();
+        demo.java8StreamsParallelStreams();
+
         demo.rotateListOfIntegers();
 
     }
 
     private List<Employee> getAllEmployees() {
         List<Employee> empList = new ArrayList<>();
-        empList.add(new Employee(1, "john", "doe", 12345, true));
-        empList.add(new Employee(2, "jane", "doe", 332211, false));
-        empList.add(new Employee(3, "miri", "regev", 112233, true));
-        empList.add(new Employee(4, "anya", "regev", 4321, true));
-        empList.add(new Employee(5, "benny", "regev", 254321, true));
-        empList.add(new Employee(6, "princess", "anna", 5432, true));
-        empList.add(new Employee(7, "princess", "elza", 9876, true));
-        empList.add(new Employee(8, "queen", "ester", 13579, true));
-        empList.add(new Employee(9, "king", "solomon", 74680, false));
-        empList.add(new Employee(10, "king", "david", 98765, true));
+        empList.add(new Employee(1, "john", "doe", "GRE", 12345, true));
+        empList.add(new Employee(2, "jane", "doe", "GRE", 332211, false));
+        empList.add(new Employee(3, "miri", "regev", "Health", 112233, true));
+        empList.add(new Employee(4, "anya", "regev", "UI/UX", 4321, true));
+        empList.add(new Employee(5, "benny", "regev", "R&D", 254321, true));
+        empList.add(new Employee(6, "princess", "anna", "UI/UX", 5432, true));
+        empList.add(new Employee(7, "princess", "elza", "R&D", 9876, true));
+        empList.add(new Employee(8, "queen", "ester", "HR", 13579, true));
+        empList.add(new Employee(9, "king", "solomon", "Management", 74680, false));
+        empList.add(new Employee(10, "king", "david", "HQ", 98765, true));
+        empList.add(new Employee(11, "queen", "padmeh", "UI/UX", 5432, true));
+        empList.add(new Employee(12, "princess", "lea", "R&D", 9876, true));
+        empList.add(new Employee(13, "yoav", "ben-tsruya", "Security", 3579, true));
+        empList.add(new Employee(14, "joshua", "Bin-Nun", "Security", 4680, false));
+        empList.add(new Employee(15, "king", "Arthur", "Management", 8765, true));
         return empList;
     }
 
