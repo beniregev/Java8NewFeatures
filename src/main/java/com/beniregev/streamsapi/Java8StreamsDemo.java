@@ -5,6 +5,7 @@ import com.beniregev.streamsapi.model.Employee;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * There are 3 distinct part of using a Stream:
@@ -13,7 +14,11 @@ import java.util.stream.IntStream;
  * 3) Consume
  */
 public class Java8StreamsDemo {
+    //  region Class properties
     private int[] numbers = {4, 90, 0, 1, 13, 4, 90, 16, 2, 0, 1};
+    private List<Integer> listOfIntegers = Arrays.asList(new Integer[] { 2004, 90, 91, 0, 1, 2020, 95, 81, 2014, 13, 4, 77, 90, 2001, 16, 2, 2005, 0, 1 });
+    private int steps = (listOfIntegers.size() * 10) + (listOfIntegers.size() / 2);
+    //  endregion
 
     public void beforeJava8FindMinNumber() {
         int min = numbers[0];
@@ -86,11 +91,12 @@ public class Java8StreamsDemo {
     public void java8StreamsFind3DistinctSmallestNumbers() {
         //  Method chaining for complicated logic and original array is not mutated!
         System.out.println("java8StreamsFind3DistinctSmallestNumbers(): *** They Are Distinct ***");
-        /*  Create  */  IntStream.of(numbers)
-        /*  Process */          .distinct()
-        /*  Process */          .sorted()
-        /*  Process */          .limit(3)
-        /*  Consume */          .forEach(System.out::println);
+        /*  Create  */
+        IntStream.of(numbers)
+                /*  Process */.distinct()
+                /*  Process */.sorted()
+                /*  Process */.limit(3)
+                /*  Consume */.forEach(System.out::println);
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
@@ -114,7 +120,7 @@ public class Java8StreamsDemo {
 
         //  Filter: only even numbers
         System.out.print("\t e) IntStream.of(int[]).filter(num -> num%2 == 0): ");
-        IntStream.of(numbers).filter(num -> num%2 == 0).forEach(num -> System.out.print(num + "  "));
+        IntStream.of(numbers).filter(num -> num % 2 == 0).forEach(num -> System.out.print(num + "  "));
         System.out.println(' ');
 
         //  Sort
@@ -148,7 +154,7 @@ public class Java8StreamsDemo {
         //  Collect: Collect wrapper Integer(s) into List
         System.out.print("\t k) IntStream.range(1, 10).boxed().collect(Collectors.toList()): ");
         List<Integer> listNumbers1to9 = IntStream.range(1, 10).boxed().collect(Collectors.toList());
-        for (Integer integer: listNumbers1to9) {
+        for (Integer integer : listNumbers1to9) {
             System.out.print(integer + "  ");
         }
         System.out.println(' ');
@@ -159,10 +165,10 @@ public class Java8StreamsDemo {
         System.out.println(' ');
 
         //  return boolean: TRUE if any num is odd?
-        System.out.println("\t m) IntStream.of(int[]).anyMatch(num -> num%2 == 1): " + IntStream.of(numbers).anyMatch(num -> num%2 == 1));
+        System.out.println("\t m) IntStream.of(int[]).anyMatch(num -> num%2 == 1): " + IntStream.of(numbers).anyMatch(num -> num % 2 == 1));
 
         //  return boolean: TRUE if all num are odd?
-        System.out.println("\t n) IntStream.of(int[]).allMatch(num -> num%2 == 1): " + IntStream.of(numbers).allMatch(num -> num%2 == 1));
+        System.out.println("\t n) IntStream.of(int[]).allMatch(num -> num%2 == 1): " + IntStream.of(numbers).allMatch(num -> num % 2 == 1));
 
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
@@ -175,9 +181,9 @@ public class Java8StreamsDemo {
         //  Sort descending
         copyList.sort((o1, o2) -> o2.getSalary() - o1.getSalary());
         //  Get first 3
-        for (int i=0; i< 3; i++) {
+        for (int i = 0; i < 3; i++) {
             Employee employee = copyList.get(i);
-            System.out.println("\t " + (i+1) + ") " + employee.getFirstName() + ' ' + employee.getLastName());
+            System.out.println("\t " + (i + 1) + ") " + employee.getFirstName() + ' ' + employee.getLastName());
         }
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
@@ -185,11 +191,12 @@ public class Java8StreamsDemo {
     public void java8StreamsFindNamesOf3HighestEarningEmployees() {
         System.out.println("java8StreamsFindNamesOf3HighestEarningEmployees(): ");
         List<Employee> employeesList = getAllEmployees();
-        /*  Create  */  employeesList.stream()
-        /*  Process */          .sorted(Comparator.comparingInt(Employee::getSalary).reversed())
-        /*  Process */          .limit(3)
-        /*  Process */          .map(Employee::getFullName)
-        /*  Consume */          .forEach(emp -> System.out.println("\t " + emp));
+        /*  Create  */
+        employeesList.stream()
+                /*  Process */.sorted(Comparator.comparingInt(Employee::getSalary).reversed())
+                /*  Process */.limit(3)
+                /*  Process */.map(Employee::getFullName)
+                /*  Consume */.forEach(emp -> System.out.println("\t " + emp));
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
@@ -228,26 +235,135 @@ public class Java8StreamsDemo {
     public void java8StreamsFindNamesOf3HighestEarningActiveEmployees() {
         System.out.println("java8StreamsFindNamesOf3HighestEarningActiveEmployees(): ");
         List<Employee> employeesList = getAllEmployees();
-        /*  Create  */  List<String> highestPaidNames = employeesList.stream()
-        /*  Process */          .sorted(Comparator.comparingInt(Employee::getSalary).reversed())
-        /*  Process */          .filter(employee -> employee.isActive())
-        /*  Process */          .limit(3)
-        /*  Process */          .map(Employee::getFullName)
-        /*  Consume */          .collect(Collectors.toList());
+
+        List<String> highestPaidNames = employeesList
+
+        /*  Create  */  .stream()
+        /*  Process */  .sorted(Comparator.comparingInt(Employee::getSalary).reversed())
+        /*  Process */  .filter(employee -> employee.isActive())
+        /*  Process */  .limit(3)
+        /*  Process */  .map(Employee::getFullName)
+        /*  Consume */  .collect(Collectors.toList());
 
         highestPaidNames.forEach(name -> System.out.println("\t " + name));
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
+    public void java8StreamsIntoCollectors() {
+        System.out.println("java8StreamsIntoCollectors(): ");
+
+        Stream<Employee> streamOfEmployees = getAllEmployees()
+                /*  Create  */.stream()
+                /*  Process */.sorted(Comparator.comparingInt(Employee::getSalary).reversed())
+                /*  Process */.filter(employee -> employee.isActive())
+                /*  Process */.limit(3);
+
+        //  Collect as different Collections: List<>, Set<>, Map<K,V>
+        List<String> ListOfEmployeesNames = streamOfEmployees
+                /*  Process */.map(Employee::getFullName)
+                /*  Consume */.collect(Collectors.toList());
+
+        Set<String> setOfEmployeesNames = streamOfEmployees
+                /*  Process */.map(Employee::getFullName)
+                /*  Consume */.collect(Collectors.toSet());
+
+        Map<String, Employee> MapOfEmployees = streamOfEmployees
+                /*  Consume */.collect(Collectors.toMap(e -> e.getFullName(), e -> e));
+
+        ListOfEmployeesNames.forEach(name -> System.out.println("\t " + name));
+        setOfEmployeesNames.forEach(name -> System.out.println("\t " + name));
+        MapOfEmployees.forEach((k,v) -> System.out.println("\t " + "key: " + k + ", value: " + v));
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+    /*
+     * Exercise:
+     * You are given a List of integers and number of steps, to rotate the list.
+     * You need to write the the algorithm in 2 way: with and without Java8 new features
+     * Note: number of steps can be bigger than the size of the list of integers.
+     * Given List = {10, 20, 30, 40, 50}
+     * Example #1: steps=0 ==> after rotating the list will be: {30, 40, 50, 10, 20}
+     * Example #2: steps=2 ==> after rotating the list will be: {30, 40, 50, 10, 20}
+     * Example #3: steps=8 ==> after rotating the list will be: {40, 50, 10, 20, 30}
+     */
+    public void rotateListOfIntegers() {
+        System.out.println("rotateListOfIntegers(): ");
+        List<Integer> listBeforeJava8 = this.beforeJava8RotateList(this.steps, this.listOfIntegers);
+        List<Integer> ListUsingJava8 = this.java8StreamsRotateList(this.steps, this.listOfIntegers);
+
+        System.out.print("\t Before Java8: ");
+        listBeforeJava8.forEach(num -> System.out.print(num + "  "));
+        System.out.println("\n");
+
+        System.out.print("\t Java8 Stream: ");
+        ListUsingJava8.forEach(num -> System.out.println("\t " + num + "  "));
+        System.out.println("\n");
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+    /**
+     * For this method you will write an algorithm to rotate the {@link List} of
+     * {@link Integer}s {@code steps} times without using <b>ANY</b> of the new
+     * features of Java 8, e.g. No lambdas, No streams, No Optionals, etc.
+     * NOTE: value of steps can be bigger than the list size.
+     * @param steps Number of steps to rotate {@code intList}
+     * @param intList the {@link List} of {@link Integer}s to rotate
+     * @return List<Integer> new rotated {@link List} of {@link Integer}s.
+     */
+    public List<Integer> beforeJava8RotateList(int steps, List<Integer> intList) {
+        int numberOfSteps = steps%intList.size();
+        if (numberOfSteps == 0) {
+            return intList;
+        }
+        List<Integer> resultList = new ArrayList<>();
+        int startFrom = numberOfSteps - 1;
+
+        //  From the item we start with to the end of the List
+        for (int i = startFrom; i<intList.size(); i++) {
+            resultList.add(intList.get(i));
+        }
+
+        //  from 0 to the item before the one we started from
+        for (int i = 0; i < startFrom; i++) {
+            resultList.add(intList.get(i));
+        }
+        return resultList;
+    }
+
+    /**
+     * For this method you will write an algorithm to rotate the {@link List} of
+     * {@link Integer}s {@code steps} times using <b>ANY</b> of the new
+     * features of Java 8, e.g. lambdas, streams, Optionals, etc.
+     * NOTE: value of steps can be bigger than the list size.
+     * @param steps Number of steps to rotate {@code intList}
+     * @param intList the {@link List} of {@link Integer}s to rotate
+     * @return List<Integer> new rotated {@link List} of {@link Integer}s.
+     */
+    public List<Integer> java8StreamsRotateList(int steps, List<Integer> intList) {
+        int numberOfSteps = steps%intList.size();
+        if (numberOfSteps == 0) {
+            return intList;
+        }
+        Stream<Integer> streamOfIntegers = intList.stream();
+        List<Integer> resultList = streamOfIntegers
+                .skip(numberOfSteps)
+                .collect(Collectors.toList());
+        resultList.addAll(streamOfIntegers
+                .limit(numberOfSteps)
+                .collect(Collectors.toList())
+        );
+        return resultList;
+    }
+
     public static void main(String[] args) {
         Java8StreamsDemo demo = new Java8StreamsDemo();
-        
+
         demo.beforeJava8FindMinNumber();
         demo.java8StreamsFindMinNumber();
-        
+
         demo.beforeJava8Find3DistinctSmallestNumbers();
         demo.java8StreamsFind3DistinctSmallestNumbers();
-        
+
         demo.beforeJava8FindNamesOf3HighestEarningEmployees();
         demo.java8StreamsFindNamesOf3HighestEarningEmployees();
 
@@ -256,21 +372,23 @@ public class Java8StreamsDemo {
 
         demo.java8StreamsApiMethods();
         demo.java8StreamsAggregatedFunctions();
-       
+
+        demo.rotateListOfIntegers();
+
     }
-    
+
     private List<Employee> getAllEmployees() {
         List<Employee> empList = new ArrayList<>();
-        empList.add(new Employee(1, "john","doe", 12345, true));
-        empList.add(new Employee(2, "jane","doe", 332211, false));
-        empList.add(new Employee(3, "miri","regev", 112233, true));
-        empList.add(new Employee(4, "anya","regev", 4321, true));
-        empList.add(new Employee(5, "benny","regev", 254321, true));
-        empList.add(new Employee(6, "princess","anna", 5432, true));
-        empList.add(new Employee(7, "princess","elza", 9876, true));
-        empList.add(new Employee(8, "queen","ester", 13579, true));
-        empList.add(new Employee(9, "king","solomon", 74680, false));
-        empList.add(new Employee(10, "king","david", 98765, true));
+        empList.add(new Employee(1, "john", "doe", 12345, true));
+        empList.add(new Employee(2, "jane", "doe", 332211, false));
+        empList.add(new Employee(3, "miri", "regev", 112233, true));
+        empList.add(new Employee(4, "anya", "regev", 4321, true));
+        empList.add(new Employee(5, "benny", "regev", 254321, true));
+        empList.add(new Employee(6, "princess", "anna", 5432, true));
+        empList.add(new Employee(7, "princess", "elza", 9876, true));
+        empList.add(new Employee(8, "queen", "ester", 13579, true));
+        empList.add(new Employee(9, "king", "solomon", 74680, false));
+        empList.add(new Employee(10, "king", "david", 98765, true));
         return empList;
     }
 
