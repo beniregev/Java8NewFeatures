@@ -11,6 +11,14 @@ class MyFirstClassImpl implements MyFirstInterface {
     }
 }
 
+/**
+ * <p>
+ * Explaining Lambda Expressions by stepping from interface and implementing
+ * class to an implementation using Anonymous Inner Class to Lambda Expressions.
+ * </p>
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 public class Java8LambdasDemo1 {
     /**
      * <p>
