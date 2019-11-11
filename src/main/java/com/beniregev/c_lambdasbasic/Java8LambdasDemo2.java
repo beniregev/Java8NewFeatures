@@ -1,12 +1,10 @@
 package com.beniregev.c_lambdasbasic;
 
-import com.sun.org.apache.xpath.internal.res.XPATHErrorResources_sv;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Java8LambdaDemo01 {
+public class Java8LambdasDemo2 {
     private List<String> names = Arrays.asList("Avraham", "Sarah", "Itshak", "Rivka");
     public void simpleIterationOnListWithoutLambda() {
         Consumer<String> con = new Consumer<String>() {
@@ -59,7 +57,7 @@ public class Java8LambdaDemo01 {
     }
 
     public static void main(String[] args) {
-        Java8LambdaDemo01 demo = new Java8LambdaDemo01();
+        Java8LambdasDemo2 demo = new Java8LambdasDemo2();
 
         demo.simpleIterationOnListWithoutLambda();
         demo.simpleIterationOnListUsingLambda();

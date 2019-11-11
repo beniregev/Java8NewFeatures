@@ -30,8 +30,8 @@ public class Java8MethodReferenceExample {
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
-    public void java8NoMethodReferenceWithOwnImplementation() {
-        System.out.println("java8NoMethodReferenceWithOwnImplementation(): ");
+    public void java8NoMethodReferenceAnonymousInnerClass() {
+        System.out.println("java8NoMethodReferenceAnonymousInnerClass(): ");
 
         MyPrinter mp = new MyPrinter();
         mp.print("Nice", new Parser() {
@@ -78,7 +78,7 @@ public class Java8MethodReferenceExample {
 
         example.java8MethodReferencePrintln();
         example.beforeJava8MethodReferenceWithMyOwnImplementation();
-        example.java8NoMethodReferenceWithOwnImplementation();
+        example.java8NoMethodReferenceAnonymousInnerClass();
         example.java8MethodReferenceWithOwnImplementation();
     }
 }
