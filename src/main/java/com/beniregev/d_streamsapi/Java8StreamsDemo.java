@@ -1,6 +1,7 @@
 package com.beniregev.d_streamsapi;
 
 import com.beniregev.d_streamsapi.model.Employee;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -413,21 +414,44 @@ public class Java8StreamsDemo {
     public void java8StreamsParallelVsSequentialTotalSalary() {
         System.out.println("java8StreamsParallelVsSequentialTotalSalary(): ");
         start = System.currentTimeMillis();
-        List<Employee> sortedItemsSequential = listOfEmployees.stream()
-                .sorted(Comparator.comparing(Employee::getFullName))
-                .collect(Collectors.toList());
+        int totalSalarySequential = listOfEmployees.stream()
+                .map(e -> e.getSalary())
+                .reduce(0, (a1, a2) -> a1+a2);
         finish = System.currentTimeMillis();
-        System.out.println("\tSequential Stream Sort took: " + (finish - start) + " milliseconds");
-        sortedItemsSequential.forEach(employee -> System.out.println("\t\t" + employee.getFullName()));
-
+        System.out.println("\tTotal Salary Sequential took: " + (finish - start) + " milliseconds");
+        System.out.println("\tTotal Salary is: " + totalSalarySequential);
+        System.out.println();
         start = System.currentTimeMillis();
-        List<Employee> sortedItemsParallel = listOfEmployees
+        int totalSalaryParallel = listOfEmployees
                 .parallelStream()
-                .sorted(Comparator.comparing(Employee::getFullName))
-                .collect(Collectors.toList());
+                .map(e -> e.getSalary())
+                .reduce(0, (a1, a2) -> a1+a2);
         finish = System.currentTimeMillis();
-        System.out.println("\tParallel Stream Sort took: " + (finish - start) + " milliseconds");
-        sortedItemsParallel.forEach(employee -> System.out.println("\t\t" + employee.getFullName()));
+        System.out.println("\tTotal Salary Parallel took: " + (finish - start) + " milliseconds");
+        System.out.println("\tTotal Salary is: " + totalSalarySequential);
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+    public void java8StreamsParallelVsSequentialFindMaxUsingOptional() {
+        System.out.println("java8StreamsParallelVsSequentialFindMaxUsingOptional(): ");
+        start = System.currentTimeMillis();
+        Optional<Employee> maxSalarySequential = listOfEmployees.stream()
+                .reduce((Employee e1, Employee e2) -> e1.getSalary() < e2.getSalary() ? e2 : e1);
+        finish = System.currentTimeMillis();
+        System.out.println("\tFind Max Salary Sequential took: " + (finish - start) + " milliseconds");
+        if (maxSalarySequential.isPresent())
+            System.out.println("\tMax Salary Employee is: " + maxSalarySequential.get().getFullName() + " who has salary of " + maxSalarySequential.get().getSalary());
+        else
+            System.out.println("\tTotal Salary employee not present!");
+
+        System.out.println();
+        start = System.currentTimeMillis();
+        Optional<Employee> maxSalaryParallel = listOfEmployees
+                .parallelStream()
+                .reduce((Employee e1, Employee e2) -> e1.getSalary() < e2.getSalary() ? e2 : e1);
+        finish = System.currentTimeMillis();
+        System.out.println("\tFind Max Salary Parallel took: " + (finish - start) + " milliseconds");
+        maxSalaryParallel.ifPresent(e -> System.out.println("\tMax Salary Employee is: " + e.getFullName() + " who has salary of " + e.getSalary()));
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
@@ -538,6 +562,8 @@ public class Java8StreamsDemo {
         demo.java8StreamsSequentialVsParallel();
         demo.java8StreamsParallelVsSequentialSorting();
         demo.java8StreamsParallelVsSequentialProcessing();
+        demo.java8StreamsParallelVsSequentialTotalSalary();
+        demo.java8StreamsParallelVsSequentialFindMaxUsingOptional();
 
         demo.rotateListOfIntegers();
 
