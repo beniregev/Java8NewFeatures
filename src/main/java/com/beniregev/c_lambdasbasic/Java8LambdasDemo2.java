@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 public class Java8LambdasDemo2 {
     private List<String> names = Arrays.asList("Avraham", "Sarah", "Itshak", "Rivka");
     public void simpleIterationOnListWithoutLambda() {
+        System.out.println("simpleIterationOnListWithoutLambda(): ");
         Consumer<String> con = new Consumer<String>() {
             @Override
             public void accept(String s) {
@@ -14,6 +15,7 @@ public class Java8LambdasDemo2 {
             }
         };
         names.forEach(con);
+        System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
     /**
@@ -47,19 +49,44 @@ public class Java8LambdasDemo2 {
      *
      * <h4>And that is how we transfer from functional interface to Lambda Expression</h4>
      */
-    public void simpleIterationOnListUsingLambda() {
+    public void java8SimpleIterationOnList() {
+        System.out.println("java8SimpleIterationOnList(): ");
         //  Call using Lambda
+        System.out.println("\tUsing Lambda Expression: ");
         names.forEach(s -> System.out.println(s));
-
+        System.out.println("-------------------------------------------------");
         //  Method Reference: Call by Method
+        System.out.println("\tUsing Method Reference -- Call by Method: ");
         names.forEach(System.out::println);
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
 
+    public void java8LambdasExpressions() {
+        System.out.println("java8LambdasExpressions(): ");
+        List<String> phrases = Arrays.asList("do. or do not. there is no try",
+                "That's what I do, I drink and I know things",
+                "In the game of Thrones you win or you die",
+                "How did you survived a knife to your heart? I didn't.",
+                "Hold the door",
+                "Live Long and prosper",
+                "I have always been, and will always be, your friend",
+                "The good of the many always outway the good of the few, or the one",
+                "He is the one who was, you are the one who is, and he's the one who will be"
+        );
+        phrases.forEach(name -> {
+            String[] substrings = name.split(" ");
+            List<String> listOfSubstrings = Arrays.asList(substrings);
+            String stringOfSubstrings = String.join("-", listOfSubstrings);
+            System.out.println("\tSubstrings: \"" + stringOfSubstrings + "\"");
+        });
+        System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
     public static void main(String[] args) {
         Java8LambdasDemo2 demo = new Java8LambdasDemo2();
 
         demo.simpleIterationOnListWithoutLambda();
-        demo.simpleIterationOnListUsingLambda();
+        demo.java8SimpleIterationOnList();
+        demo.java8LambdasExpressions();
     }
 }
