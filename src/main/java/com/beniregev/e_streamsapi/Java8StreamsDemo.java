@@ -1,7 +1,6 @@
-package com.beniregev.d_streamsapi;
+package com.beniregev.e_streamsapi;
 
-import com.beniregev.d_streamsapi.model.Employee;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import com.beniregev.e_streamsapi.model.Employee;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,10 +8,20 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * There are 3 distinct part of using a Stream:
- * 1) Create
- * 2) Process
- * 3) Consume
+ * <p>
+ * <div>There are 3 distinct part of using a Stream: </div>
+ * <div>1) Create.</div>
+ * <div>2) Process.</div>
+ * <div>3) Consume.</div>
+ * </p>
+ * <p>
+ * This class contains examples and demos for various usages of the new Stream API introduced in Java 8.
+ * </p>
+ * <p>
+ * There are examples and demos for implementatio before Java 8 vs. the implementation in Java 8 using Stream API.
+ * </p>
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
  */
 public class Java8StreamsDemo {
     //  region Class properties

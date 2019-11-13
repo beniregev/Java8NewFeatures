@@ -1,4 +1,4 @@
-package com.beniregev.e_methodreference;
+package com.beniregev.d_methodreference;
 
 import java.util.Arrays;
 import java.util.List;

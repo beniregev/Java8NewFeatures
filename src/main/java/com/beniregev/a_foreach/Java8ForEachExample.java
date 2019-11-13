@@ -48,11 +48,9 @@ public class Java8ForEachExample {
 
         //traversing through forEach method of Iterable with anonymous class
         myList.forEach(new Consumer<Integer>() {
-
             public void accept(Integer t) {
                 System.out.println("forEach anonymous class Value::" + t);
             }
-
         });
 
         //traversing with Consumer interface implementation

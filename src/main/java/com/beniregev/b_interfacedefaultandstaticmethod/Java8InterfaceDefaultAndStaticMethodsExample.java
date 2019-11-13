@@ -1,4 +1,4 @@
-package com.beniregev.b_defaultmethod;
+package com.beniregev.b_interfacedefaultandstaticmethod;
 
 /**
  * <p>
@@ -41,10 +41,10 @@ package com.beniregev.b_defaultmethod;
  * For complete details of interface changes in Java 8, please read <i>Java 8 interface changes</i>.
  * </p>
  * @author Binyamin Regev email: beniregev@gmail.com
- * @see com.beniregev.b_defaultmethod.Interface1
- * @see com.beniregev.b_defaultmethod.Interface2
+ * @see com.beniregev.b_interfacedefaultandstaticmethod.Interface1
+ * @see com.beniregev.b_interfacedefaultandstaticmethod.Interface2
  */
-public class MyClass implements Interface1, Interface2 {
+public class Java8InterfaceDefaultAndStaticMethodsExample implements Interface1, Interface2 {
     @Override
     public void method2() {
     }
@@ -53,10 +53,10 @@ public class MyClass implements Interface1, Interface2 {
     public void method1(String str) {
     }
 
-    //MyClass won't compile without having it's own log() implementation
-    @Override
-    public void log(String str){
-        System.out.println("MyClass logging::"+str);
-        Interface1.print("abc");
+    public static void main(String[] args) {
+        Java8InterfaceDefaultAndStaticMethodsExample example = new Java8InterfaceDefaultAndStaticMethodsExample();
+        example.log1("Calling Interface1 default method log1(String)");
+        example.log2("Calling Interface2 default method log1(String)");
+        Interface1.print("Calling Interface1 static method print(String)");
     }
 }

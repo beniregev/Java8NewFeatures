@@ -3,6 +3,13 @@ package com.beniregev.f_optional;
 import java.util.*;
 import java.util.stream.IntStream;
 
+/**
+ * Using {@link Optional}<T> and {@link OptionalInt} classes,
+ * demonstrating the usage of {@code .isPresent()}, {@code .orElse()}
+ * and {@code .orElseThrow()} methods.
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 public class Java8OptionalExamples {
     private int[] numbers = {4, 90, 0, 1, 13, 4, 90, 16, 2, 0, 1};
     List<Integer> listOfIntegers = Arrays.asList(-9, 77, -18, 81, 0, 25, 4, 69);
