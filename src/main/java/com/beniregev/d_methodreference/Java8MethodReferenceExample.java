@@ -3,6 +3,19 @@ package com.beniregev.d_methodreference;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>
+ * <ul>
+ * Demonstrating Java 8 Method Reference.
+ * <li>Simple Method Reference -- Println</li>
+ * <li>How it was before Java 8 -- Method Reference of My Own Implementation</li>
+ * <li>Java 8 No Method Reference Anonymous Inner Class.</li>
+ * <li>Java 8 static and non-static Method Reference of Own Implementation.</li>
+ * </ul>
+ * </p>
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 public class Java8MethodReferenceExample {
     private List<String> names = Arrays.asList("Avraham", "Sarah", "Itshak", "Rivka");
 
@@ -83,6 +96,11 @@ public class Java8MethodReferenceExample {
     }
 }
 
+/**
+ *
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 class MyPrinter {
     public void print(String str) {
         System.out.println(str);
@@ -93,10 +111,20 @@ class MyPrinter {
     }
 }
 
+/**
+ *
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 interface Parser {
     String parse(String str);
 }
 
+/**
+ *
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 class StringParser {
     public static String staticConvert(String s) {
         if (s.length() <= 4)

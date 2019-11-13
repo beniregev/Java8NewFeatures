@@ -1,9 +1,22 @@
 package com.beniregev.c_lambdasbasic;
 
+/**
+ * <p>
+ * Interface to be implemented in {@link MyFirstClassImpl} to demonstrate
+ * a class implementing interface as done before Java 8 and Lambda Expressions.
+ * </p>
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 interface MyFirstInterface {
     void show();
 }
 
+/**
+ * Demonstrating class implementing interface as done before Java 8.
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 class MyFirstClassImpl implements MyFirstInterface {
     @Override
     public void show() {
@@ -111,6 +124,13 @@ public class Java8LambdasDemo1 {
     }
 }
 
+/**
+ * <p>
+ * Interface to demonstrate Java 8 Lambda Expressions.
+ * </p>
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 interface MySecondInterface {
     void show(int i);
 }

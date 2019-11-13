@@ -40,7 +40,8 @@ package com.beniregev.b_interfacedefaultandstaticmethod;
  * <p>
  * For complete details of interface changes in Java 8, please read <i>Java 8 interface changes</i>.
  * </p>
- * @author Binyamin Regev email: beniregev@gmail.com
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
  * @see com.beniregev.b_interfacedefaultandstaticmethod.Interface1
  * @see com.beniregev.b_interfacedefaultandstaticmethod.Interface2
  */

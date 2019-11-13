@@ -4,6 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * <p>
+ * <ul>
+ * Demonstrating Java 8 Lambda Expressions.
+ * <li>Simple Iteration on {@link List} without Lambda.</li>
+ * <li>java 8 Simple Iteration On {@link List}.</li>
+ * </ul>
+ * </p>
+ * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @since 1.8
+ */
 public class Java8LambdasDemo2 {
     private List<String> names = Arrays.asList("Avraham", "Sarah", "Itshak", "Rivka");
     public void simpleIterationOnListWithoutLambda() {
