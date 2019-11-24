@@ -1,6 +1,7 @@
 package com.beniregev.e_streamsapi;
 
 import com.beniregev.e_streamsapi.model.Employee;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -494,6 +495,21 @@ public class Java8StreamsDemo {
     }
 
     /**
+     * Exercise: Given an array with duplicate values, we want an array with all distinct values.
+     */
+    public void java8StreamsArrayOfDistinctValues() {
+        System.out.println("java8StreamsArrayOfDistinctValues(): ");
+        int[] arrayWithDuplicates = { 5,4,6,7,8,4,5,6,7,3,1,1,2,3,4,5,6,7,8,8};
+        System.out.println("Array with duplicate values: " + Arrays.toString(arrayWithDuplicates));
+
+        //  region Exercise Solution
+        int[] arrayOfDistinctValues = IntStream.of(arrayWithDuplicates).distinct().toArray();
+        System.out.println("Array of Distinct values: " + Arrays.toString(arrayOfDistinctValues));
+        //  endregion
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+    /**
      * For this method you will write an algorithm to rotate the {@link List} of
      * {@link Integer}s {@code steps} times without using <b>ANY</b> of the new
      * features of Java 8, e.g. No lambdas, No streams, No Optionals, etc.
@@ -548,6 +564,39 @@ public class Java8StreamsDemo {
         return resultList;
     }
 
+    /**
+     * Exercise: Given an {@link HashSet} collection containing {@code Strings}, we want
+     * to remove from it all the Strings that contain at least one character that isn't
+     * a capital (UPPER case) letter.
+     */
+    public void java8StreamsRemoveInvalidStrings() {
+        System.out.println("java8StreamsRemoveInvalidStrings(): ");
+        Set<String> strings = new HashSet<>();
+        strings.add("NICE");
+        strings.add("Java 8");
+        strings.add("SPRING5");
+        strings.add("Springboot 2.2.1");
+        strings.add("HTML 5");
+        strings.add("CSS");
+        strings.add("jQuery");
+        strings.add("JavaScript");
+        strings.add("HTML");
+        strings.add("bootstrap4");
+
+        System.out.println("Original HashSet of strings: ");
+        strings.forEach(i -> System.out.print(i + " "));
+        System.out.println();
+
+        //  region Exercise Solution
+        strings.removeIf(str -> !str.matches("[A-Z]+"));
+        System.out.println("After removing strings: ");
+        strings.forEach(i -> System.out.print(i + " "));
+        System.out.println();
+        //  endregion Exercise Solution
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+
     public static void main(String[] args) {
         Java8StreamsDemo demo = new Java8StreamsDemo();
 
@@ -574,7 +623,9 @@ public class Java8StreamsDemo {
         demo.java8StreamsParallelVsSequentialTotalSalary();
         demo.java8StreamsParallelVsSequentialFindMaxUsingOptional();
 
+        demo.java8StreamsArrayOfDistinctValues();
         demo.rotateListOfIntegers();
+        demo.java8StreamsRemoveInvalidStrings();
 
     }
 
