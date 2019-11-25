@@ -1,8 +1,10 @@
 package com.beniregev.e_streamsapi;
 
 import com.beniregev.e_streamsapi.model.Employee;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -25,6 +27,12 @@ import java.util.stream.Stream;
  * @since 1.8
  */
 public class Java8StreamsDemo {
+    //  region Class Finals
+    private static final String PATH_RESOURCES = "C:/development/JavaProjects/IdeaProjects/Java8NewFeatures/src/main/resources/";
+    private static final String FILE_BANDS_TXT = "bands.txt";
+    private static final String FILE_DATA_CSV = "data.csv";
+    //  endregion
+
     //  region Class properties
     private int[] numbers = {4, 90, 0, 1, 13, 4, 90, 16, 2, 0, 1};
     private List<Integer> listOfIntegers = Arrays.asList(2004, 90, 25, 91, 84, 0, 69, 1, 2020, 95, 81, 2014, 13, 83, 4, 77, 90, 2001, 16, 81, 2, 34, 2005, 0, 1);
@@ -118,8 +126,8 @@ public class Java8StreamsDemo {
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
-    public void java8StreamsApiMethods() {
-        System.out.println("java8StreamsApiMethods(): ");
+    public void java8StreamsAPIMethods() {
+        System.out.println("java8StreamsAPIMethods(): ");
 
         //  Distinct
         System.out.print("\ta) IntStream.of(int[]).distinct(): ");
@@ -187,6 +195,115 @@ public class Java8StreamsDemo {
 
         //  return boolean: TRUE if all num are odd?
         System.out.println("\tn) IntStream.of(int[]).allMatch(num -> num%2 == 1): " + IntStream.of(numbers).allMatch(num -> num % 2 == 1));
+
+        System.out.println("--------------------------------------------------------------------------------------------------");
+    }
+
+    public void java8StreamsSomeExamples() throws IOException {
+        System.out.println("java8StreamsExamples() ");
+        //  1. Integer Stream
+        System.out.println("\t1. Integer Stream:");
+        IntStream.range(1, 10).forEach(System.out::print);
+        IntStream.range(1, 10).forEach(num -> System.out.print(num + " "));
+
+        System.out.println("\n\t2. Integer Stream with skip:");
+        IntStream.range(1, 10).skip(5).forEach(num -> System.out.print(num + " "));
+
+        System.out.print("\n\t3. Integer Stream with sum: ");
+        System.out.println(IntStream.range(1, 10).sum());
+
+        System.out.print("\n\t4. Stream.of, sorted and findFirst: ");
+        Stream.of("Ava", "Nagila", "Nice", "Company", "Java", "jQuery", "Spring5", "Springboot")
+                .sorted()
+                .findFirst()
+                .ifPresent(System.out::println);
+
+        //  5. Create a stream from an Array. Then sort, filter and print it
+        System.out.println("\n\t5. Stream from Array, sort, filter and print: ");
+        String[] names = { "JavaScript", "Nagila", "Nice", "Company", "Java", "jQuery", "Spring5", "Springboot" };
+        Arrays.stream(names)
+                .filter(x -> x.startsWith("J"))
+                .sorted()
+                .forEach(name -> System.out.println("\t\t" + name));
+
+        //  6. Average of squares of an int array
+        System.out.print("\n\t6. Average of squares of an int array: ");
+        Arrays.stream(new int[] {2,4,6,8,10,12,14,16,18,20})
+                .map(x -> x * x)
+                .average()
+                .ifPresent(System.out::println);
+
+        //  7. Stream from List, filter and print
+        System.out.print("\n\t7. Stream from List, filter and print: ");
+        List<String> languages = Arrays.asList("JavaScript", "CSS3", "Angular8", "Java", "jQuery", "Spring5", "Springboot4", "HTML5", "Cucumber", "Jijot");
+        languages.stream()
+                .map(String::toLowerCase)
+                .filter(x -> x.startsWith("j"))
+                .forEach(lang -> System.out.print('"' + lang + "\"  "));
+
+        //  8. Stream rows from text file, sort, filter and print
+        System.out.println("\n\t8. Stream rows from text file, sort, filter and print: ");
+        Stream<String> bands1 = Files.lines(Paths.get(PATH_RESOURCES + FILE_BANDS_TXT));
+
+        bands1.sorted()
+                .filter(x -> x.length() > 13)
+                .forEach(band -> System.out.println("\t\t" + band));
+        bands1.close();
+
+        //  9. Stream rows from text file as save to List
+        System.out.println("\n\t9. Stream rows from text file as save to List: ");
+        List<String> listOfBands = Files.lines(Paths.get(PATH_RESOURCES + FILE_BANDS_TXT))
+                .filter(x -> x.contains("jit"))
+                .collect(Collectors.toList());
+        listOfBands.forEach(str -> System.out.println("\t\t" + str));
+
+        //  10. Stream rows from CSV file and count the good rows that have all values
+        System.out.print("\n\t10. Stream rows from CSV file and count: ");
+        Stream<String> rows1 = Files.lines(Paths.get(PATH_RESOURCES + FILE_DATA_CSV));
+        //  Splitting each row into an array, and array with less than 3 items will be filtered out
+        int rowCount = (int) rows1
+                .map(x -> x.split(","))
+                .filter(x -> x.length == 3)
+                .count();
+        System.out.println(rowCount + " rows.");
+        rows1.close();
+
+        //  11. Stream rows from CSV, parse data from rows
+        System.out.println("\n\t11. Stream rows from CSV, parse data from rows: ");
+        Stream<String> rows2 = Files.lines(Paths.get(PATH_RESOURCES + FILE_DATA_CSV));
+        //  Splitting each row into an array, and array with less than 3 items will be filtered out
+        rows2.map(x -> x.split(","))
+                .filter(x -> x.length == 3)
+                .filter(x -> Integer.parseInt(x[1]) > 15)
+                .forEach(x -> System.out.println("\t\t" + x[0] + "  " + x[1] + "  " + x[2]));
+        rows2.close();
+
+        //  12. Stream rows from CSV, store fields in HashMap
+        System.out.println("\n\t12. Stream rows from CSV, store fields in HashMap: ");
+        Stream<String> rows3 = Files.lines(Paths.get(PATH_RESOURCES + FILE_DATA_CSV));
+        Map<String, Integer> map = new HashMap<>();
+        map = rows3.map(x -> x.split(","))
+                .filter(x -> x.length == 3)
+                .filter(x -> Integer.parseInt(x[1]) > 15)
+                .collect(Collectors.toMap(
+                        x -> x[0],
+                        x -> Integer.parseInt(x[1])));
+        rows3.close();
+        //map.keySet().stream().forEach(key -> System.out.print(key + "  "));
+        //map.values().stream().forEach(val -> System.out.print(val + "  "));
+        map.forEach((key,val) -> System.out.println("\t\tkey=" + key + ", value=" + val));
+
+        //  13. Reduction - sum
+        System.out.print("\n\t13. Reduction - sum: ");
+        double total = Stream.of(8.2, 5.6, 8.1, 7.3, 9.6, 6.7, 4.8, 7.7)
+                .reduce(0.0, (Double a, Double b) -> a + b);
+        System.out.println(total);
+
+        //  14. Reduction - Summary Statistics -- NOTE: only works with integers
+        System.out.print("\n\t14. Reduction - Summary Statistics (only work w/ integers): ");
+        IntSummaryStatistics stats = IntStream.of(82, 56, 81, 42, 73, 67, 48, 77)
+                .summaryStatistics();
+        System.out.println(stats);
 
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
@@ -270,22 +387,34 @@ public class Java8StreamsDemo {
     public void java8StreamsIntoCollectors() {
         System.out.println("java8StreamsIntoCollectors(): ");
 
-        Stream<Employee> streamOfEmployees = getAllEmployees()
+        Stream<Employee> streamOfEmployees1 = getAllEmployees()
+                /*  Create  */.stream()
+                /*  Process */.sorted(Comparator.comparingInt(Employee::getSalary).reversed())
+                /*  Process */.filter(employee -> employee.isActive())
+                /*  Process */.limit(3);
+
+        Stream<Employee> streamOfEmployees2 = getAllEmployees()
+                /*  Create  */.stream()
+                /*  Process */.sorted(Comparator.comparingInt(Employee::getSalary).reversed())
+                /*  Process */.filter(employee -> employee.isActive())
+                /*  Process */.limit(3);
+
+        Stream<Employee> streamOfEmployees3 = getAllEmployees()
                 /*  Create  */.stream()
                 /*  Process */.sorted(Comparator.comparingInt(Employee::getSalary).reversed())
                 /*  Process */.filter(employee -> employee.isActive())
                 /*  Process */.limit(3);
 
         //  Collect as different Collections: List<>, Set<>, Map<K,V>
-        List<String> ListOfEmployeesNames = streamOfEmployees
+        List<String> ListOfEmployeesNames = streamOfEmployees1
                 /*  Process */.map(Employee::getFullName)
                 /*  Consume */.collect(Collectors.toList());
 
-        Set<String> setOfEmployeesNames = streamOfEmployees
+        Set<String> setOfEmployeesNames = streamOfEmployees2
                 /*  Process */.map(Employee::getFullName)
                 /*  Consume */.collect(Collectors.toSet());
 
-        Map<String, Employee> MapOfEmployees = streamOfEmployees
+        Map<String, Employee> MapOfEmployees = streamOfEmployees3
                 /*  Consume */.collect(Collectors.toMap(e -> e.getFullName(), e -> e));
 
         ListOfEmployeesNames.forEach(name -> System.out.println("\t" + name));
@@ -597,7 +726,7 @@ public class Java8StreamsDemo {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Java8StreamsDemo demo = new Java8StreamsDemo();
 
         demo.beforeJava8FindMinNumber();
@@ -612,7 +741,10 @@ public class Java8StreamsDemo {
         demo.beforeJava8FindNamesOf3HighestEarningActiveEmployees();
         demo.java8StreamsFindNamesOf3HighestEarningActiveEmployees();
 
-        demo.java8StreamsApiMethods();
+
+        demo.java8StreamsIntoCollectors();
+        demo.java8StreamsAPIMethods();
+        demo.java8StreamsSomeExamples();
         demo.java8StreamsAggregatedFunctions();
 
         demo.java8StreamsCollectors();
