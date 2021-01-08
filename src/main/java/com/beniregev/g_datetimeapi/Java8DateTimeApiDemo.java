@@ -1,4 +1,4 @@
-package com.beniregev.datetimeapi;
+package com.beniregev.g_datetimeapi;
 
 import java.time.*;
 
