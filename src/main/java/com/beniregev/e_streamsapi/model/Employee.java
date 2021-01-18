@@ -15,7 +15,7 @@ import lombok.*;
  *     <li>lombok.Value</li>
  *     </ul>
  * </p>
- * @author Binyamin Regev e-mail: beniregev@gmail.com
+ * @author Binyamin Regev
  * @since 1.8
  */
 //@Getter
