@@ -10,6 +10,7 @@ public class JavaInternationalizationExample {
         //Get ResourceBundle with Locale that are already defined
         ResourceBundle bundleFR = ResourceBundle.getBundle("ApplicationMessages", Locale.FRANCE);
         //Get resource bundle when Locale needs to be created
+        System.out.println(new Locale("he", "IL"));
         ResourceBundle bundleIL = ResourceBundle.getBundle("ApplicationMessages", new Locale("he", "IL"));
         ResourceBundle bundleSWE = ResourceBundle.getBundle("ApplicationMessages", new Locale("sv", "SE"));
 
