@@ -8,6 +8,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.10/lombok-1.18.10-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.16/lombok-1.18.16-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
