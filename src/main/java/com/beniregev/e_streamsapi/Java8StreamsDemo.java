@@ -28,7 +28,8 @@ import java.util.stream.Stream;
  */
 public class Java8StreamsDemo {
     //  region Class Finals
-    private static final String PATH_RESOURCES = "C:/development/JavaProjects/IdeaProjects/Java8NewFeatures/src/main/resources/";
+    private static final String PATH_RESOURCES = "D:/JavaProjects/IdeaProjects/Java8NewFeatures/src/main/resources/";
+
     private static final String FILE_BANDS_TXT = "bands.txt";
     private static final String FILE_DATA_CSV = "data.csv";
     //  endregion
@@ -243,12 +244,12 @@ public class Java8StreamsDemo {
 
         //  8. Stream rows from text file, sort, filter and print
         System.out.println("\n\t8. Stream rows from text file, sort, filter and print: ");
-        Stream<String> bands1 = Files.lines(Paths.get(PATH_RESOURCES + FILE_BANDS_TXT));
-
-        bands1.sorted()
-                .filter(x -> x.length() > 13)
-                .forEach(band -> System.out.println("\t\t" + band));
-        bands1.close();
+//        Stream<String> bands1 = Files.lines(Paths.get(PATH_RESOURCES + FILE_BANDS_TXT));
+//
+//        bands1.sorted()
+//                .filter(x -> x.length() > 13)
+//                .forEach(band -> System.out.println("\t\t" + band));
+//        bands1.close();
 
         //  9. Stream rows from text file as save to List
         System.out.println("\n\t9. Stream rows from text file as save to List: ");
@@ -681,9 +682,8 @@ public class Java8StreamsDemo {
         if (numberOfSteps == 0) {
             return intList;
         }
-        Stream<Integer> streamOfIntegers = intList.stream();
         //  From the item we start with to the end of the List
-        List<Integer> resultList = streamOfIntegers
+        List<Integer> resultList = intList.stream()
                 .skip(numberOfSteps)
                 .collect(Collectors.toList());
         //  Add the numbers from 0 to the item before the one we started from to the end of the result list
