@@ -306,6 +306,11 @@ public class Java8StreamsDemo {
                 .summaryStatistics();
         System.out.println(stats);
 
+        //  15. Create a phone-number from a given int[] with numbers between 0 and 9
+        System.out.println("\t\t15. Create a phone-number from a given int[] with numbers between 0 and 9");
+        int[] numbers = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+        System.out.println(String.format("(%d%d%d) %d%d%d-%d%d%d%d", java.util.stream.IntStream.of(numbers).boxed().toArray()));
+
         System.out.println("--------------------------------------------------------------------------------------------------");
     }
 
